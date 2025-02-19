@@ -1,14 +1,30 @@
-[gd_scene load_steps=6 format=3 uid="uid://cdoksexcakmop"]
+[gd_scene load_steps=13 format=3 uid="uid://cdoksexcakmop"]
 
 [ext_resource type="PackedScene" uid="uid://y5a4e3ajuy2r" path="res://scenes/StonePlatform.tscn" id="1"]
+[ext_resource type="Texture2D" uid="uid://c0do1j2bc1edf" path="res://assets/stone.png" id="1_rcio5"]
 [ext_resource type="PackedScene" uid="uid://datfp8kxjrjg" path="res://scenes/BlueShip.tscn" id="2"]
 [ext_resource type="Script" path="res://scenes/PlatformBlue.gd" id="3"]
 [ext_resource type="Script" path="res://scenes/ObjectiveArea.gd" id="4"]
+[ext_resource type="PackedScene" uid="uid://stpuevv3jy2j" path="res://scenes/BlueShip2.tscn" id="5_5idr8"]
+[ext_resource type="PackedScene" uid="uid://bewbp8cyh4s1c" path="res://scenes/rocky.tscn" id="5_m0hoc"]
+[ext_resource type="Script" path="res://scenes/rocky.gd" id="5_pgwrd"]
+[ext_resource type="Script" path="res://scenes/LoseArea.gd" id="8_n8i6y"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(138.75, 79)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ki4gt"]
+size = Vector2(84, 70)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1qwtt"]
+size = Vector2(2038, 487)
+
 [node name="MainLevel" type="Node"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(435, 559)
+scale = Vector2(21.9429, 16.9714)
+texture = ExtResource("1_rcio5")
 
 [node name="PlatformBlue" type="Node2D" parent="."]
 position = Vector2(35, 565)
@@ -30,4 +46,67 @@ script = ExtResource("4")
 position = Vector2(70.625, 40)
 shape = SubResource("1")
 
+[node name="PlatformBlue2" type="Node2D" parent="."]
+position = Vector2(475, 555)
+script = ExtResource("3")
+
+[node name="StonePlatform" parent="PlatformBlue2" instance=ExtResource("1")]
+
+[node name="StonePlatform2" parent="PlatformBlue2" instance=ExtResource("1")]
+position = Vector2(70, 0)
+
+[node name="BlueShip2" parent="." instance=ExtResource("5_5idr8")]
+
+[node name="ObjectiveArea2" type="Area2D" parent="."]
+script = ExtResource("4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObjectiveArea2"]
+position = Vector2(493, 40)
+shape = SubResource("1")
+
+[node name="Node2D" type="Area2D" parent="."]
+script = ExtResource("5_pgwrd")
+
+[node name="Rocky" parent="Node2D" instance=ExtResource("5_m0hoc")]
+position = Vector2(267, 311)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D"]
+position = Vector2(267, 308)
+shape = SubResource("RectangleShape2D_ki4gt")
+
+[node name="Mistakes" type="RichTextLabel" parent="."]
+visible = false
+anchors_preset = -1
+anchor_top = 0.383
+anchor_right = 0.5
+anchor_bottom = 0.562
+offset_left = -3.0
+offset_top = -0.184006
+offset_right = 10.0
+offset_bottom = -0.176025
+text = "                                           
+
+                                             MISTAKES WERE MADE"
+
+[node name="Counter" type="RichTextLabel" parent="."]
+anchors_preset = -1
+anchor_left = 0.209
+anchor_top = 0.015
+anchor_right = 0.238
+anchor_bottom = 0.085
+offset_left = 0.231995
+offset_top = 0.28
+offset_right = -0.175995
+offset_bottom = -0.0800018
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("8_n8i6y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(269, 1275)
+shape = SubResource("RectangleShape2D_1qwtt")
+
 [connection signal="body_entered" from="ObjectiveArea" to="ObjectiveArea" method="_on_ObjectiveArea_body_entered"]
+[connection signal="body_entered" from="ObjectiveArea2" to="ObjectiveArea2" method="_on_ObjectiveArea_body_entered"]
+[connection signal="body_entered" from="Node2D" to="Node2D" method="_on_body_entered"]
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

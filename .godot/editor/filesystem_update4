@@ -1,5 +1,7 @@
 res://scenes/MainLevel.tscn
-res://scenes/PlatformBlue.gd
-res://README.md
 res://scenes/StonePlatform.tscn
 res://scenes/BlueShip.tscn
+res://scenes/rocky.tscn
+res://scenes/rocky.gd
+res://scenes/PlatformBlue.gd
+res://scenes/LoseArea.gd
